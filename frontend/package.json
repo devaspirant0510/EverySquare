@@ -1,0 +1,18 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nuxt"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@nuxtjs/axios": "^5.13.6",
+    "@nuxtjs/vuetify": "^1.12.1",
+    "axios": "^0.21.1",
+    "nuxt": "^2.15.8",
+    "vue": "^2.6.14"
+  }
+}
