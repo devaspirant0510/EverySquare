@@ -4,6 +4,7 @@ export const state = ()=>({
 
 export const mutations = {
     creatRoom(state,payload){
+        state.roomList.push(payload)
     }
 }
 export const actions ={
@@ -12,7 +13,7 @@ export const actions ={
         // code here....
 
 
-        context.commit("creatRoom");
+        context.commit("creatRoom",payload);
     }
 
 }
