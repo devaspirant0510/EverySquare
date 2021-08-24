@@ -6,25 +6,23 @@
 
 <script>
 export default {
-  data(){
-    return{
-
-    }
+  data() {
+    return {}
   },
-  computed:{
-    name(){
+  computed: {
+    name() {
       return this.$store.state.room.roomName;
     },
-    name1(){
+    name1() {
       return this.$store.state.counter;
     }
   },
-  methods:{
-    setChangeName(){
+  methods: {
+    setChangeName() {
       this.$store.commit("room/setRoomName");
     },
-    setChangeCounter(){
-      this.$store.commit("user/setUserId","afdssdaf")
+    setChangeCounter() {
+      this.$store.commit("user/setUserId", "afdssdaf")
     }
   }
 
