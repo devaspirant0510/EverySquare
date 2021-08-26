@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">EverySquare</string>
     <string name="home">홈</string>
+    <string name="googleKey">804944144702-p7qkdot2ag0mpmldkhin602vb96bkcsb.apps.googleusercontent.com</string>
 </resources>
