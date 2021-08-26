@@ -68,6 +68,6 @@ server.listen(app.get("PORT"),()=>{
     console.log("server is open ",app.get("PORT"));
 });
 const httpServer = http.createServer(app);
-httpServer.listen(80,()=>{
+httpServer.listen(process.env.HTTP_PORT,()=>{
     console.log("http server is open");
 })
