@@ -11,7 +11,7 @@ router.get("/login",async (req,res,next)=>{
         const sessionKey = req.signedCookies['user'];
         const userInfo = req.session[sessionKey]
         if(userInfo){
-            res.json(util.convertToJson(res.statusCode,userInfo));
+            res.json(util.convertToJson(res.statusCode,"ok",userInfo));
         }else{
             res.json(util.convertToJson(res.statusCode,"please login"));
         }
@@ -53,7 +53,7 @@ router.post("/login", async (req, res, next) => {
                 expires:expiresDate
             });
             req.session[cookieKey] =sessionData.dataValues;
-            res.json(util.convertToJson(res.statusCode,result));
+            res.json(util.convertToJson(res.statusCode,"ok",result));
         } else {
             sessionData = isRegister;
             const expiresDate = new Date(Date.now()+60 * 60 * 1000 * 24 * 365); // 24시간(1일) * 365
