@@ -18,9 +18,21 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_kakao_login"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginHorizontal="32dp"
         android:background="@drawable/kakao_login_medium_wide"
+        app:layout_constraintBottom_toTopOf="@+id/btn_google_login"
+        app:layout_constraintEnd_toEndOf="@+id/btn_google_login"
+        app:layout_constraintStart_toStartOf="@+id/btn_google_login" />
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/btn_google_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginHorizontal="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

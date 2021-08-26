@@ -14,9 +14,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.Task;
 import com.kakao.sdk.auth.model.OAuthToken;
 import com.kakao.sdk.user.UserApiClient;
 import com.kakao.sdk.user.model.User;
+import com.ossh.everysquare.R;
 import com.ossh.everysquare.databinding.ActivityLoginBinding;
 import com.ossh.everysquare.model.LoginUser;
 import com.ossh.everysquare.network.EverySquareAPI;
@@ -53,8 +60,13 @@ import retrofit2.Response;
  */
 public class LoginActivity extends AppCompatActivity implements LoginSuccessBottomDialog.OnSubmitToLoginActivity{
     private static final String TAG = LoginActivity.class.getSimpleName();
+    private static final int GOOGLE_LOGIN = 510;
     private ActivityLoginBinding binding;
+    // 카카오 로그인 관련
     private Function2<OAuthToken,Throwable,Unit> callback;
+    // 구글 로그인 관련
+    private GoogleSignInClient mGoogleSignInClient;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,7 +78,14 @@ public class LoginActivity extends AppCompatActivity implements LoginSuccessBott
         getHashKey();
     }
     private void init(){
-        // 로그인 성공여부 체크 콜백 메서드
+        // 셰어드 프리퍼런스 초기화
+        SharedManger.init(SharedManger.LOGIN_INFO,getApplicationContext());
+        // 현재 기기에서 로그인 정보가 있는지 체크
+        // 로그인 한 정보가 true 즉 로그인 한적이 있을경우
+        if (SharedManger.loadData(SharedManger.SAVE_STATE_IS_LOGIN,false)){
+            changeToMain();
+        }
+        // 카카오 로그인 성공여부 체크 콜백 메서드
         callback = new Function2<OAuthToken, Throwable, Unit>() {
             @Override
             public Unit invoke(OAuthToken oAuthToken, Throwable throwable) {
@@ -80,12 +99,11 @@ public class LoginActivity extends AppCompatActivity implements LoginSuccessBott
                 return null;
             }
         };
-        SharedManger.init(SharedManger.LOGIN_INFO,getApplicationContext());
-        // 현재 기기에서 로그인 정보가 있는지 체크
-        // 로그인 한 정보가 true 즉 로그인 한적이 있을경우
-        if (SharedManger.loadData(SharedManger.SAVE_STATE_IS_LOGIN,false)){
-            changeToMain();
-        }
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.googleKey))
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
     }
     private void event(){
@@ -97,6 +115,13 @@ public class LoginActivity extends AppCompatActivity implements LoginSuccessBott
                 } else {
                     UserApiClient.getInstance().loginWithKakaoAccount(LoginActivity.this, callback);
                 }
+            }
+        });
+        binding.btnGoogleLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent googleIntent = mGoogleSignInClient.getSignInIntent();
+                startActivityForResult(googleIntent,GOOGLE_LOGIN);
 
             }
         });
@@ -191,6 +216,39 @@ public class LoginActivity extends AppCompatActivity implements LoginSuccessBott
                 Log.e(TAG, "onFailure: "+t.getMessage() );
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        // 구글 로그인 버튼 눌렀을때
+        if(resultCode==RESULT_OK && requestCode==GOOGLE_LOGIN){
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                // 구글 로그인 성공시
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                if (account != null && account.getPhotoUrl()!=null) {
+                    Log.e(TAG, "onActivityResult: " + account.getAccount().name + " "
+                            + account.getEmail() + " " + account.getId() + " " + account.getIdToken());
+                    Log.e(TAG, "onActivityResult: "+account.getDisplayName() );
+                    Log.e(TAG, "onActivityResult: "+account.getFamilyName() );
+                    Log.e(TAG, "onActivityResult: "+account.getServerAuthCode() );
+                    Log.e(TAG, "onActivityResult: "+account.getGivenName() );
+                    Log.e(TAG, "onActivityResult: "+account.getPhotoUrl().toString() );
+                    LoginUser loginUser = new LoginUser(
+                            account.getId(),
+                            account.getEmail(),
+                            account.getDisplayName(),
+                            account.getPhotoUrl().toString());
+                    showLoginSuccessDialog(loginUser);
+                }
+
+            } catch (ApiException e) {
+                // Google Sign In failed, update UI appropriately
+                Log.w(TAG, "Google sign in failed", e);
+                Toast.makeText(getApplicationContext(), "Google sign in Failed", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 
     // 해시키  가져오기
