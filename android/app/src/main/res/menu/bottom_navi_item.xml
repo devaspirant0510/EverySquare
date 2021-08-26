@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/bni_item_home"
+        android:icon="@drawable/va_menu_home"
+        app:showAsAction="always"
+        android:title="@string/home" />
+    <item
+        android:icon="@drawable/va_menu_room"
+        app:showAsAction="always"
+        android:id="@+id/bni_item_room_create"
+        android:title="방생성"/>
+    <item
+        android:icon="@drawable/va_menu_search"
+        app:showAsAction="always"
+        android:id="@+id/bni_item_room_search"
+        android:title="검색"/>
+    <item
+        android:icon="@drawable/va_menu_setting"
+        app:showAsAction="always"
+        android:id="@+id/bni_item_setting"
+        android:title="설정"/>
+
+</menu>
