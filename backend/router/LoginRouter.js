@@ -34,6 +34,7 @@ router.post("/login", async (req, res, next) => {
                 id: id
             }
         });
+        console.log(isRegister)
         // DB 에 회원정보가 없을경우 신구회원이기 때문에 정보를 그대로 저장
         if (!isRegister) {
             const result = await User.create({
@@ -66,7 +67,7 @@ router.post("/login", async (req, res, next) => {
                 expires:expiresDate
             });
             req.session[cookieKey] =sessionData.dataValues;
-            res.json(util.convertToJson(res.statusCode,"you is everySquare member"))
+            res.json(util.convertToJson(res.statusCode,"you are everySquare member",isRegister))
         }
 
     } catch (err) {
