@@ -1,10 +1,16 @@
 const common = {};
 
-const convertToJson = (status,message) =>{
-    return {
+const convertToJson = (status,message,data) =>{
+    console.log(status)
+    console.log(message)
+    console.log(data)
+    let messageL = {
         status,
-        message
+        message,
+        data
     }
+    console.log(messageL);
+    return messageL;
 
 }
 common.convertToJson = convertToJson;
