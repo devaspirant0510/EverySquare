@@ -9,6 +9,7 @@ dotenv.config();
 
 const path = require("path");
 const https = require("https");
+const http = require("http");
 const fs = require("fs");
 
 const {sequelize} = require("./models");
@@ -66,3 +67,7 @@ const server = https.createServer(httpsOptions,app);
 server.listen(app.get("PORT"),()=>{
     console.log("server is open ",app.get("PORT"));
 });
+const httpServer = http.createServer(app);
+httpServer.listen(80,()=>{
+    console.log("http server is open");
+})
