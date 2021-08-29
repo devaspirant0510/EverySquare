@@ -75,4 +75,15 @@ router.post("/login", async (req, res, next) => {
     }
 });
 
+router.post("/logout",async (req,res,next)=>{
+    try{
+        req.session = null;
+        res.clearCookie("user");
+        res.json(util.convertToJson(201,"logout"));
+    }catch (err){
+        next(err);
+    }
+
+});
+
 module.exports = router;

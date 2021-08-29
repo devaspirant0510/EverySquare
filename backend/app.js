@@ -4,6 +4,7 @@ const multer = require("multer");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const expressSession = require("express-session");
+const {ExpressPeerServer} = require("peer");
 
 dotenv.config();
 
@@ -13,6 +14,8 @@ const http = require("http");
 const fs = require("fs");
 
 const {sequelize} = require("./models");
+const socketServer = require("./socket");
+const util = require("./util/common");
 const IndexRouter = require("./router/IndexRouter");
 const LoginRouter = require("./router/LoginRouter");
 const ProfileRouter = require("./router/ProfileRouter");
@@ -40,7 +43,8 @@ app.use(express.urlencoded({extended:true}));
 app.use(morgan(process.env.MORGAN_SETTING||"dev"))
 app.use(cookieParser(process.env.COOKIE_KEY))
 const sessionMiddleware = expressSession({
-    cookie:{secret:process.env.COOKIE_KEY,
+    cookie:{
+        secret:process.env.COOKIE_KEY,
         httpOnly:true
     },
     name:'connect.sid'
@@ -55,18 +59,25 @@ app.use(SettingRouter);
 
 
 app.use((req,res,next)=>{
-    res.json({message:"요청한 페이지를 찾을수 없습니다."});
+
+    res.json(util.convertToJson(404,"Not Found","요청한 페이지를 찾을수 없습니다."));
 });
 
 app.use((err,req,res,next)=>{
     console.log(err);
-    res.json({message:err.message});
+    res.json(util.convertToJson(400,"Error",err.message));
 });
 
 const server = https.createServer(httpsOptions,app);
 server.listen(app.get("PORT"),()=>{
     console.log("server is open ",app.get("PORT"));
 });
+const peerServer = ExpressPeerServer(server, {
+    debug: true,
+});
+app.use("/peerjs", peerServer);
+socketServer(server,app);
+
 const httpServer = http.createServer(app);
 httpServer.listen(process.env.HTTP_PORT,()=>{
     console.log("http server is open");

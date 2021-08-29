@@ -28,8 +28,7 @@ router.post("/room",async (req,res,next)=>{
             isPublic
         });
         console.log(result);
-        res.json(result);
-
+        res.json(util.convertToJson(201,"ok",result));
     }catch (err){
         next(err);
     }
