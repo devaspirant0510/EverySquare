@@ -11,8 +11,10 @@ router.get("/login",async (req,res,next)=>{
         const sessionKey = req.signedCookies['user'];
         const userInfo = req.session[sessionKey]
         if(userInfo){
+            res.header("Access-Control-Allow-Origin", "*");
             res.json(util.convertToJson(res.statusCode,"ok",userInfo));
         }else{
+            res.header("Access-Control-Allow-Origin", "*");
             res.json(util.convertToJson(res.statusCode,"please login"));
         }
     }catch (err){

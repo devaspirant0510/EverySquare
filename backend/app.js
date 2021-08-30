@@ -68,17 +68,19 @@ app.use((err,req,res,next)=>{
     res.json(util.convertToJson(400,"Error",err.message));
 });
 
+/*
 const server = https.createServer(httpsOptions,app);
 server.listen(app.get("PORT"),()=>{
     console.log("server is open ",app.get("PORT"));
 });
+*/
+const server = http.createServer(app);
+server.listen(process.env.HTTP_PORT,()=>{
+    console.log("http server is open");
+})
 const peerServer = ExpressPeerServer(server, {
     debug: true,
 });
 app.use("/peerjs", peerServer);
 socketServer(server,app);
 
-const httpServer = http.createServer(app);
-httpServer.listen(process.env.HTTP_PORT,()=>{
-    console.log("http server is open");
-})
