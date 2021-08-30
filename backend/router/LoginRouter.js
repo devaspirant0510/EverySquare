@@ -7,14 +7,14 @@ const router = express.Router();
 
 router.get("/login",async (req,res,next)=>{
     try{
-        console.log(req.signedCookies);
+        console.log(req.session);
         const sessionKey = req.signedCookies['user'];
         const userInfo = req.session[sessionKey]
         if(userInfo){
-            res.header("Access-Control-Allow-Origin", "*");
+            res.cookie("s","sfd")
             res.json(util.convertToJson(res.statusCode,"ok",userInfo));
         }else{
-            res.header("Access-Control-Allow-Origin", "*");
+            res.cookie("s","sfd")
             res.json(util.convertToJson(res.statusCode,"please login"));
         }
     }catch (err){
@@ -52,10 +52,12 @@ router.post("/login", async (req, res, next) => {
             res.cookie("user",cookieKey,{
                 httpOnly:true,
                 signed:true,
-                secure:true,
+                secure:false,
                 expires:expiresDate
             });
             req.session[cookieKey] =sessionData.dataValues;
+            console.log(req.session)
+            console.log(req.signedCookies)
             res.json(util.convertToJson(res.statusCode,"ok",result));
         } else {
             sessionData = isRegister;
@@ -65,10 +67,12 @@ router.post("/login", async (req, res, next) => {
             res.cookie("user",cookieKey,{
                 httpOnly:true,
                 signed:true,
-                secure:true,
+                secure:false,
                 expires:expiresDate
             });
             req.session[cookieKey] =sessionData.dataValues;
+            console.log(req.session)
+            console.log(req.signedCookies)
             res.json(util.convertToJson(res.statusCode,"you are everySquare member",isRegister))
         }
 

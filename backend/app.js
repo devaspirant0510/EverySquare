@@ -32,10 +32,6 @@ sequelize.sync({force:false}).then(()=>{
     console.log("연결오류 "+r);
 });
 
-const httpsOptions = {
-    key:fs.readFileSync(path.join(__dirname,"sslKey","private.pem")),
-    cert:fs.readFileSync(path.join(__dirname,"sslKey","public.pem"))
-}
 
 app.set("PORT",process.env.PORT||8080);
 
@@ -51,7 +47,12 @@ const sessionMiddleware = expressSession({
     name:'connect.sid'
 });
 app.use(sessionMiddleware);
-app.use(cors());
+app.use(cors(
+    {
+        origin:true,
+        credentials: true,
+    },
+));
 app.use(IndexRouter);
 app.use(LoginRouter);
 app.use(ProfileRouter);

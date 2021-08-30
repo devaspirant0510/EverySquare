@@ -17,7 +17,7 @@ router.get("/room",async (req,res,next)=>{
 
 router.post("/room",async (req,res,next)=>{
     try{
-        const {roomName,roomDescription,maxUser,hashtag,isPublic} =req.body;
+        const {roomName,roomDescription,maxUser,hashtag,isPublic,UserId} =req.body;
         const roomKey = uuidV4();
         const result = await Room.create({
             roomKey,
@@ -25,7 +25,8 @@ router.post("/room",async (req,res,next)=>{
             roomDescription,
             maxUser,
             hashtag,
-            isPublic
+            isPublic,
+            UserId
         });
         console.log(result);
         res.json(util.convertToJson(201,"ok",result));
