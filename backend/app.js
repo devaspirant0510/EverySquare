@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const multer = require("multer");
 const morgan = require("morgan");
+const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const expressSession = require("express-session");
 const {ExpressPeerServer} = require("peer");
@@ -50,6 +51,7 @@ const sessionMiddleware = expressSession({
     name:'connect.sid'
 });
 app.use(sessionMiddleware);
+app.use(cors());
 app.use(IndexRouter);
 app.use(LoginRouter);
 app.use(ProfileRouter);
