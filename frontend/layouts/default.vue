@@ -1,4 +1,4 @@
-<template>
+<template style="height: 100px">
   <div>
     <nuxt/>
   </div>

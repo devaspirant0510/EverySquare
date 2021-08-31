@@ -13,7 +13,9 @@
         :items="items"
     ></v-autocomplete>
 
+<!--
     <UserContainer v-for="(v,i) in getRooms" v-bind:key="v.roomName" :room-info="getRooms[i]"/>
+-->
 
   </div>
 </template>
@@ -24,6 +26,11 @@ export default {
   name: "search",
   components: {UserContainer},
   layout: "frame",
+  async created() {
+    console.log(this.$store.state.user.loginCookie)
+    await this.$store.dispatch("room/loadRoom",this.$store.state.user.loginCookie);
+
+  },
   data(){
     return {
       items:['토론방','공부방','잡담방','책가방'],
@@ -33,11 +40,9 @@ export default {
     }
   },
   computed:{
-/*
-    getRooms(){
+    getRooms() {
       return this.$store.state.room.roomList;
     }
-*/
 
   }
 }

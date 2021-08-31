@@ -56,8 +56,10 @@ export default {
       const result = await this.$store.dispatch("room/create", {
         roomName:this.inputTitle,
         roomDescription:this.inputDescription,
-        roomMaxUser:this.inputMaxUser,
-        roomHashTag:this.inputHashTag
+        maxUser:this.inputMaxUser,
+        isPublic:true,
+        roomHashTag:this.inputHashTag,
+        UserId:this.$store.state.user.myInfo.id
       });
       console.log(result)
       await this.$router.push("/room?id=adsfklj");
