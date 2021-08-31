@@ -2,11 +2,6 @@
   <div v-if="$route.path==='/room'">
     <LayoutPostRoom/>
   </div>
-  <div v-else >
-    <VideoComponent/>
-
-  </div>
-
 </template>
 
 <script>
@@ -24,15 +19,6 @@ export default {
     }
   },
   methods:{
-    onShow(){
-      if(this.$route.path==='/room'){
-        showFrame = "frame";
-        return true;
-      }else{
-        showFrame=""
-        return false;
-      }
-    }
 
   },
   layout:showFrame,

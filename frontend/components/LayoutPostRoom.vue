@@ -1,7 +1,6 @@
 <template>
 
   <div>
-    <div>adfdafs</div>
     <RoomPost/>
   </div>
 

@@ -22,16 +22,16 @@
                     <v-list-item  class="px-2" style="margin: 5px; "
                                  v-on:click="onClickMenuItem('프로필')">
                       <v-list-item-avatar>
-                        <v-img :src="getUserInfo.userProfile"></v-img>
+                        <v-img :src="getUserInfo.profileURL"></v-img>
                       </v-list-item-avatar>
                     </v-list-item>
 
                     <v-list-item link>
                       <v-list-item-content>
                         <v-list-item-title style="padding: 5px" class="text-h6">
-                          {{ getUserInfo.userName }}
+                          {{ getUserInfo.nickname }}
                         </v-list-item-title>
-                        <v-list-item-subtitle>{{ getUserInfo.userEmail }}</v-list-item-subtitle>
+                        <v-list-item-subtitle>{{ getUserInfo.email }}</v-list-item-subtitle>
                       </v-list-item-content>
                     </v-list-item>
                   </v-list>

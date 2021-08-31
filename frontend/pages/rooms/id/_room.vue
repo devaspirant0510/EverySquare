@@ -1,6 +1,6 @@
-<template>
+<template >
 
-  <VideoComponent/>
+  <VideoComponent />
 </template>
 
 <script>
