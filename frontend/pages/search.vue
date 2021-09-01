@@ -29,6 +29,7 @@ export default {
   async created() {
     console.log(this.$store.state.user.loginCookie)
     await this.$store.dispatch("room/loadRoom",this.$store.state.user.loginCookie);
+    console.log(this.option)
 
   },
   data(){
