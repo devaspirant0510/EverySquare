@@ -1,18 +1,19 @@
-const common = {};
-
+// 표준 json 형태로 바꿔주는 함수
 const convertToJson = (status,message,data) =>{
-    console.log(status)
-    console.log(message)
-    console.log(data)
     let messageL = {
         status,
         message,
         data
     }
-    console.log(messageL);
     return messageL;
-
 }
-common.convertToJson = convertToJson;
+// 쿠키키로 세션 벨류에 접근
+const getSessionValue = (req,cookieKey) =>{
+    const ckey = req.signedCookies[cookieKey];
+    return req.session[ckey];
+}
 
-module.exports = common;
+module.exports = {
+    convertToJson,
+    getSessionValue
+};

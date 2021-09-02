@@ -8,8 +8,16 @@ const router = express.Router();
 
 router.get("/room",async (req,res,next)=>{
     try {
-        const result = await Room.findAll();
-        res.json(util.convertToJson(res.statusCode,result));
+        console.log(req.cookies)
+        console.log(req.signedCookies)
+        const cookieKey = req.signedCookies['user'];
+        const userInfo = req.session[cookieKey];
+        if(userInfo){
+            const result = await Room.findAll();
+            res.json(util.convertToJson(res.statusCode,"ok",result));
+        }else{
+            res.json(util.convertToJson(400,"please login"))
+        }
     }catch (err){
         next(err);
     }
