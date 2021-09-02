@@ -1,0 +1,86 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+
+{% if userInfo %}
+
+<div id="root-page">
+    <nav id="nav-menu" style="display: none">
+        <div id="nav-menu-profile">
+            <img  id="img-profile" src="{{userInfo.profileURL}}">
+            <h3>
+                {{userInfo.nickname}}
+            </h3>
+            <h4>
+                {{userInfo.email}}
+
+            </h4>
+        </div>
+        <ul>
+            <li>
+                <a href="/">
+                    <img class="nav-menu-icon" src="/navi_item_home.png"/>
+                    <span>홈화면</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="/room">
+                    <img class="nav-menu-icon" src="/navi_item_room.png"/>
+                    <span>방 생성</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="/search">
+                    <img class="nav-menu-icon" src="/navi_item_search.png"/>
+                    <span>방 검색</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="/setting">
+                    <img class="nav-menu-icon" src="/navi_item_setting.png"/>
+                    <span>설정</span>
+                </a>
+            </li>
+        </ul>
+
+    </nav>
+    <nav id="nav-default-menu">
+        <div id="nav-default-menu-profile">
+            <img id="img-default-profile" src="{{userInfo.profileURL}}">
+        </div>
+        <img class="nav-menu-icon" src="/navi_item_home.png"/>
+        <img class="nav-menu-icon" src="/navi_item_room.png"/>
+        <img class="nav-menu-icon" src="/navi_item_search.png"/>
+        <img class="nav-menu-icon" src="/navi_item_setting.png"/>
+
+    </nav>
+    <main id="main-screen">
+        <section>
+
+        </section>
+    </main>
+
+    <aside>
+
+    </aside>
+</div>
+{% else %}
+<div class="index-not-login">
+    <div id="go-to-login">
+        <h1>Every Square</h1>
+        <h3>Opps..</h3>
+        <button id="btn-go-to-login-page">로그인하러가기</button>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}
+
+
+{% block script %}
+
+<script src="/index.js"></script>
+{% endblock %}
