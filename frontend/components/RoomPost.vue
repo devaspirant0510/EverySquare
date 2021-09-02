@@ -28,7 +28,7 @@
           <v-btn v-on:click="onClickCreateRoom">
             생성하기
           </v-btn>
-          <v-btn to="/rooms/id/asdfasdf">
+          <v-btn to="/roominfo/asdfasdf">
             돌아가기
           </v-btn>
         </v-container>

@@ -32,6 +32,16 @@ export default {
   name: "VideoComponent",
   layout: "frame",
   mounted() {
+    const socket = io.connect("http://127.0.0.1:8081/socket.io", {
+      path: "/socket.io",
+      reconnection:false
+    });
+    console.log(socket)
+    socket.on("join",(msg)=>{
+      console.log(msg);
+    });
+    console.log("mounted")
+    socket.emit("message","asfd");
     const defaultConstrains = {
       audio: true,
       video: true,
