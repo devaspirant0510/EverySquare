@@ -27,5 +27,6 @@ imgKakaoLogin.addEventListener("click", async () => {
         profileURL:"http://k.kakaocdn.net/dn/HwAKC/btrctvvgubC/jX1cIa2iU3psChbNRorknk/img_640x640.jpg"
 
     });
+    location.href = "/";
 
 });

@@ -7,7 +7,7 @@
 <div id="root-page">
     <nav id="nav-menu" style="display: none">
         <div id="nav-menu-profile">
-            <img  id="img-profile" src="{{userInfo.profileURL}}">
+            <img id="img-profile" src="{{userInfo.profileURL}}">
             <h3>
                 {{userInfo.nickname}}
             </h3>
@@ -16,35 +16,33 @@
 
             </h4>
         </div>
-        <ul>
-            <li>
-                <a href="/">
-                    <img class="nav-menu-icon" src="/navi_item_home.png"/>
-                    <span>홈화면</span>
-                </a>
-            </li>
+        <li>
+            <a href="/">
+                <img class="nav-menu-icon" src="/navi_item_home.png"/>
+                <span>홈화면</span>
+            </a>
+        </li>
 
-            <li>
-                <a href="/room">
-                    <img class="nav-menu-icon" src="/navi_item_room.png"/>
-                    <span>방 생성</span>
-                </a>
-            </li>
+        <li>
+            <a href="/room">
+                <img class="nav-menu-icon" src="/navi_item_room.png"/>
+                <span>방 생성</span>
+            </a>
+        </li>
 
-            <li>
-                <a href="/search">
-                    <img class="nav-menu-icon" src="/navi_item_search.png"/>
-                    <span>방 검색</span>
-                </a>
-            </li>
+        <li>
+            <a href="/search">
+                <img class="nav-menu-icon" src="/navi_item_search.png"/>
+                <span>방 검색</span>
+            </a>
+        </li>
 
-            <li>
-                <a href="/setting">
-                    <img class="nav-menu-icon" src="/navi_item_setting.png"/>
-                    <span>설정</span>
-                </a>
-            </li>
-        </ul>
+        <li>
+            <a href="/setting">
+                <img class="nav-menu-icon" src="/navi_item_setting.png"/>
+                <span>설정</span>
+            </a>
+        </li>
 
     </nav>
     <nav id="nav-default-menu">
@@ -58,7 +56,41 @@
 
     </nav>
     <main id="main-screen">
-        <section>
+        <section id="room-create-section">
+            <h1>방생성</h1>
+            <form id="form-room-create">
+                <fieldset>
+                    <legend>방 제목</legend>
+                    <input required id="input-room-name" type="text" placeholder="방제를 입력해주세요"/>
+                </fieldset>
+                <fieldset>
+                    <legend>방 설명</legend>
+                    <textarea required id="textarea-room-description" placeholder="방 설명을 입력해주세요" name="Text1" cols="40" rows="5"></textarea>
+                </fieldset>
+                <fieldset>
+                    <legend>방 최대인원수</legend>
+                    <input required id="input-room-max" placeholder="최대 인원을 입력해주세요 (2~10)" type="number"/>
+                </fieldset>
+                <fieldset>
+                    <legend>해시태그</legend>
+                    <input required id="input-room-hashtag" placeholder="해시태그를 입력해주세요" type="text"/>
+                </fieldset>
+                <fieldset>
+                    <legend>공개여부</legend>
+                    <label for="radio-room-public">
+                        공개
+                        <input id="radio-room-public" type="radio">
+                    </label>
+                    </br>
+                    <label for="radio-room-private">
+                        비공개
+                        <input id="radio-room-private" type="radio">
+                    </label>
+                </fieldset>
+                <button id="btn-submit-room-create" type="submit">
+                    생성하기
+                </button>
+            </form>
 
         </section>
     </main>
@@ -83,4 +115,5 @@
 {% block script %}
 
 <script src="/index.js"></script>
+<script src="/room.js"></script>
 {% endblock %}

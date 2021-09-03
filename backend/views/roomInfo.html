@@ -3,70 +3,95 @@
 {% block content %}
 
 {% if userInfo %}
+<script>
+    const USER_ID = "{{userInfo.id}}";
+    const USER_EMAIL = "{{userInfo.email}}";
+    const USER_PROFILE_URL = "{{userInfo.profileURL}}";
+    const USER_NAME = "{{userInfo.nickname}}";
+    const USER_INFO = {
+        id: USER_ID,
+        email: USER_EMAIL,
+        profileURL: USER_PROFILE_URL,
+        nickname: USER_NAME
+    }
 
-<div id="root-page">
-    <nav id="nav-menu" style="display: none">
-        <div id="nav-menu-profile">
-            <img  id="img-profile" src="{{userInfo.profileURL}}">
-            <h3>
-                {{userInfo.nickname}}
-            </h3>
-            <h4>
-                {{userInfo.email}}
-
-            </h4>
-        </div>
-        <ul>
-            <li>
-                <a href="/">
-                    <img class="nav-menu-icon" src="/navi_item_home.png"/>
-                    <span>홈화면</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="/room">
-                    <img class="nav-menu-icon" src="/navi_item_room.png"/>
-                    <span>방 생성</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="/search">
-                    <img class="nav-menu-icon" src="/navi_item_search.png"/>
-                    <span>방 검색</span>
-                </a>
-            </li>
-
-            <li>
-                <a href="/setting">
-                    <img class="nav-menu-icon" src="/navi_item_setting.png"/>
-                    <span>설정</span>
-                </a>
-            </li>
-        </ul>
-
-    </nav>
-    <nav id="nav-default-menu">
-        <div id="nav-default-menu-profile">
-            <img id="img-default-profile" src="{{userInfo.profileURL}}">
-        </div>
-        <img class="nav-menu-icon" src="/navi_item_home.png"/>
-        <img class="nav-menu-icon" src="/navi_item_room.png"/>
-        <img class="nav-menu-icon" src="/navi_item_search.png"/>
-        <img class="nav-menu-icon" src="/navi_item_setting.png"/>
-
-    </nav>
-    <main id="main-screen">
-        <section>
-
+    console.log("fasd", USER_INFO)
+</script>
+<main id="main-screen">
+    <section id="section-main">
+        <section id="section-video">
+            <div id="root-video-grid">
+                <video></video>
+            </div>
         </section>
-    </main>
+        <section id="section-chat" style="display: none">
+            <ul>
+                <li>안녕</li>
+            </ul>
+            <div>
+                <span>
 
-    <aside>
+                <select>
+                    <option>전체</option>
+                </select>
+                </span>
+                <span>
+                    <form>
 
-    </aside>
-</div>
+                        <input>
+                        <button>전송</button>
+                    </form>
+
+                    </span>
+            </div>
+        </section>
+    </section>
+    <footer>
+        <button id="btn-handle-cam">
+            <div id="btn-video-cam">
+                <i class="material-icons">videocam</i><br>
+                <i>카메라</i>
+            </div>
+            <div id="btn-video-cam-off" style="display:none;">
+                <i class="material-icons">videocam_off</i><br>
+                <i>카메라 끄기</i>
+            </div>
+        </button>
+        <button id="btn-handle-mic">
+            <div id="btn-mic">
+                <i class="material-icons">mic</i><br>
+                <i>마이크</i>
+            </div>
+            <div id="btn-mic-off" style="display:none;">
+                <i class="material-icons">mic_off</i><br>
+                <i>마이크 끄기</i>
+            </div>
+        </button>
+        <button id="btn-handle-present">
+            <div id="btn-present-to-all">
+                <i class="material-icons present-to-all">present_to_all</i><br>
+                <i>화면공유</i>
+            </div>
+            <div id="cancel-presentation" style="display:none;">
+                <i class="material-icons">cancel_presentation</i><br>
+                <i>화면공유 종료</i>
+            </div>
+        </button>
+        <button id="btn-handle-message">
+            <div id="btn-message">
+                <i class="material-icons">messages</i><br>
+                <i>채팅창</i>
+            </div>
+            <div id="btn-message-off" style="display:none;">
+                <i class="material-icons">speaker_notes_off</i><br>
+                <i>채팅창 닫기</i>
+            </div>
+        </button>
+        <button id="btn-exit">
+            나가기
+        </button>
+    </footer>
+</main>
 {% else %}
 <div class="index-not-login">
     <div id="go-to-login">
@@ -81,6 +106,7 @@
 
 
 {% block script %}
-
-<script src="/index.js"></script>
+<script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="/roominfo.js"></script>
 {% endblock %}

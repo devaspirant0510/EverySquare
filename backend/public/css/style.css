@@ -7,11 +7,15 @@
 div,span,h1,h2,h3,h4,h5,h6{
     font-family: ROKABold;
 }
-ul{
+ol, ul {
     list-style: none;
+    margin:0; padding:0;
 }
 a{
     text-decoration: none;
+}
+textarea{
+    resize: none;
 }
 
 .index-not-login{
@@ -87,4 +91,46 @@ a{
 .nav-menu-item-selected{
     background: gray;
     opacity: 0.5;
+}
+#root-video-grid{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+video{
+    background: dodgerblue;
+}
+@media all and (min-width: 1200px) {
+    video{
+        height: 480px;
+        width: 600px;
+    }
+}
+@media (min-width:500px) and (max-width:1199px) {
+    video{
+        height: 240px;
+        width: 300px;
+    }
+}
+
+#section-main{
+    display: flex;
+}
+#section-video{
+    flex-basis: 100%;
+    display: flex;
+    justify-content: space-evenly;
+
+
+}
+#section-chat{
+    flex-basis: 30%;
+    border: 1px solid black;
+
+}
+#btn-exit{
+    background: red;
+    padding: 15px;
+    border-radius: 13px;
+    color: white;
 }

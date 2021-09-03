@@ -7,7 +7,7 @@
 <div id="root-page">
     <nav id="nav-menu" style="display: none">
         <div id="nav-menu-profile">
-            <img id="img-profile" src="{{userInfo.profileURL}}">
+            <img  id="img-profile" src="{{userInfo.profileURL}}">
             <h3>
                 {{userInfo.nickname}}
             </h3>
@@ -16,33 +16,35 @@
 
             </h4>
         </div>
-        <li>
-            <a href="/">
-                <img class="nav-menu-icon" src="/navi_item_home.png"/>
-                <span>홈화면</span>
-            </a>
-        </li>
+        <ul>
+            <li>
+                <a href="/">
+                    <img class="nav-menu-icon" src="/navi_item_home.png"/>
+                    <span>홈화면</span>
+                </a>
+            </li>
 
-        <li>
-            <a href="/room">
-                <img class="nav-menu-icon" src="/navi_item_room.png"/>
-                <span>방 생성</span>
-            </a>
-        </li>
+            <li>
+                <a href="/room">
+                    <img class="nav-menu-icon" src="/navi_item_room.png"/>
+                    <span>방 생성</span>
+                </a>
+            </li>
 
-        <li>
-            <a href="/search">
-                <img class="nav-menu-icon" src="/navi_item_search.png"/>
-                <span>방 검색</span>
-            </a>
-        </li>
+            <li>
+                <a href="/search">
+                    <img class="nav-menu-icon" src="/navi_item_search.png"/>
+                    <span>방 검색</span>
+                </a>
+            </li>
 
-        <li>
-            <a href="/setting">
-                <img class="nav-menu-icon" src="/navi_item_setting.png"/>
-                <span>설정</span>
-            </a>
-        </li>
+            <li>
+                <a href="/setting">
+                    <img class="nav-menu-icon" src="/navi_item_setting.png"/>
+                    <span>설정</span>
+                </a>
+            </li>
+        </ul>
 
     </nav>
     <nav id="nav-default-menu">
@@ -55,6 +57,7 @@
         <img class="nav-menu-icon" src="/navi_item_setting.png"/>
 
     </nav>
+
     <main id="main-screen">
         <section>
 
