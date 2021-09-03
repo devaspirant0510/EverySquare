@@ -7,11 +7,14 @@
 div,span,h1,h2,h3,h4,h5,h6{
     font-family: ROKABold;
 }
-ul{
+ul,li{
     list-style: none;
 }
 a{
     text-decoration: none;
+}
+textarea{
+    resize: none;
 }
 
 .index-not-login{
@@ -88,3 +91,24 @@ a{
     background: gray;
     opacity: 0.5;
 }
+#root-video-grid{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+video{
+    background: dodgerblue;
+}
+@media all and (min-width: 1200px) {
+    video{
+        height: 480px;
+        width: 600px;
+    }
+}
+@media (min-width:500px) and (max-width:1199px) {
+    video{
+        height: 240px;
+        width: 300px;
+    }
+}
+
