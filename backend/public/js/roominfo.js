@@ -4,6 +4,7 @@ const btnHandleCam = document.querySelector("#btn-handle-cam");
 const btnHandleMic = document.querySelector("#btn-handle-mic");
 const btnHandlePresent = document.querySelector("#btn-handle-present");
 const btnHandleMessage = document.querySelector("#btn-handle-message");
+const sectionChat = document.querySelector("#section-chat");
 
 const videoChatOptions = {
     video:true,
@@ -137,5 +138,17 @@ function handleVideoConfigure(stream){
             btnMicOn.style.display = "block";
             btnMicOff.style.display = "none";
         }
-    })
+    });
+    btnHandleMessage.addEventListener("click",(evt)=>{
+        if(videoChatOptions.isShowChat){
+            videoChatOptions.isShowChat = false;
+            sectionChat.style.display = "block";
+        }
+        else{
+            videoChatOptions.isShowChat = true;
+            sectionChat.style.display = "none";
+        }
+
+
+    });
 }

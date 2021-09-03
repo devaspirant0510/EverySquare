@@ -3,74 +3,95 @@
 {% block content %}
 
 {% if userInfo %}
-    <script>
-        const USER_ID = "{{userInfo.id}}";
-        const USER_EMAIL = "{{userInfo.email}}";
-        const USER_PROFILE_URL = "{{userInfo.profileURL}}";
-        const USER_NAME = "{{userInfo.nickname}}";
-        const USER_INFO = {
-            id:USER_ID,
-            email:USER_EMAIL,
-            profileURL:USER_PROFILE_URL,
-            nickname:USER_NAME
-        }
+<script>
+    const USER_ID = "{{userInfo.id}}";
+    const USER_EMAIL = "{{userInfo.email}}";
+    const USER_PROFILE_URL = "{{userInfo.profileURL}}";
+    const USER_NAME = "{{userInfo.nickname}}";
+    const USER_INFO = {
+        id: USER_ID,
+        email: USER_EMAIL,
+        profileURL: USER_PROFILE_URL,
+        nickname: USER_NAME
+    }
 
-        console.log("fasd",USER_INFO)
-    </script>
-    <main id="main-screen">
-        <section id="section-main">
-            <section id="section-video">
-                <div id="root-video-grid">
-                    <video></video>
-                </div>
-            </section>
-            <section id="section-chat">
-
-            </section>
+    console.log("fasd", USER_INFO)
+</script>
+<main id="main-screen">
+    <section id="section-main">
+        <section id="section-video">
+            <div id="root-video-grid">
+                <video></video>
+            </div>
         </section>
-        <footer>
-            <button id="btn-handle-cam">
-                <div id="btn-video-cam">
-                    <i class = "material-icons">videocam</i><br>
-                    <i>카메라</i>
-                </div>
-                <div id="btn-video-cam-off" style="display:none;">
-                    <i class="material-icons">videocam_off</i><br>
-                    <i>카메라 끄기</i>
-                </div>
-            </button>
-            <button id="btn-handle-mic">
-                <div id="btn-mic">
-                    <i class="material-icons">mic</i><br>
-                    <i>마이크</i>
-                </div>
-                <div id="btn-mic-off" style="display:none;">
-                    <i class="material-icons">mic_off</i><br>
-                    <i>마이크 끄기</i>
-                </div>
-            </button>
-            <button id="btn-handle-present">
-                <div id="btn-present-to-all">
-                    <i class="material-icons present-to-all">present_to_all</i><br>
-                    <i>화면공유</i>
-                </div>
-                <div id="cancel-presentation" style="display:none;">
-                    <i class="material-icons">cancel_presentation</i><br>
-                    <i>화면공유 종료</i>
-                </div>
-            </button>
-            <button id="btn-handle-message">
-                <div id="btn-message">
-                    <i class="material-icons">messages</i><br>
-                    <i>채팅창</i>
-                </div>
-                <div id="btn-message-off" style="display:none;">
-                    <i class="material-icons">speaker_notes_off</i><br>
-                    <i>채팅창 닫기</i>
-                </div>
-            </button>
-        </footer>
-    </main>
+        <section id="section-chat" style="display: none">
+            <ul>
+                <li>안녕</li>
+            </ul>
+            <div>
+                <span>
+
+                <select>
+                    <option>전체</option>
+                </select>
+                </span>
+                <span>
+                    <form>
+
+                        <input>
+                        <button>전송</button>
+                    </form>
+
+                    </span>
+            </div>
+        </section>
+    </section>
+    <footer>
+        <button id="btn-handle-cam">
+            <div id="btn-video-cam">
+                <i class="material-icons">videocam</i><br>
+                <i>카메라</i>
+            </div>
+            <div id="btn-video-cam-off" style="display:none;">
+                <i class="material-icons">videocam_off</i><br>
+                <i>카메라 끄기</i>
+            </div>
+        </button>
+        <button id="btn-handle-mic">
+            <div id="btn-mic">
+                <i class="material-icons">mic</i><br>
+                <i>마이크</i>
+            </div>
+            <div id="btn-mic-off" style="display:none;">
+                <i class="material-icons">mic_off</i><br>
+                <i>마이크 끄기</i>
+            </div>
+        </button>
+        <button id="btn-handle-present">
+            <div id="btn-present-to-all">
+                <i class="material-icons present-to-all">present_to_all</i><br>
+                <i>화면공유</i>
+            </div>
+            <div id="cancel-presentation" style="display:none;">
+                <i class="material-icons">cancel_presentation</i><br>
+                <i>화면공유 종료</i>
+            </div>
+        </button>
+        <button id="btn-handle-message">
+            <div id="btn-message">
+                <i class="material-icons">messages</i><br>
+                <i>채팅창</i>
+            </div>
+            <div id="btn-message-off" style="display:none;">
+                <i class="material-icons">speaker_notes_off</i><br>
+                <i>채팅창 닫기</i>
+            </div>
+        </button>
+        <button id="btn-exit">
+            나가기
+        </button>
+    </footer>
+</main>
 {% else %}
 <div class="index-not-login">
     <div id="go-to-login">

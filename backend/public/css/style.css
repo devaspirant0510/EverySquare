@@ -7,8 +7,9 @@
 div,span,h1,h2,h3,h4,h5,h6{
     font-family: ROKABold;
 }
-ul,li{
+ol, ul {
     list-style: none;
+    margin:0; padding:0;
 }
 a{
     text-decoration: none;
@@ -112,3 +113,24 @@ video{
     }
 }
 
+#section-main{
+    display: flex;
+}
+#section-video{
+    flex-basis: 100%;
+    display: flex;
+    justify-content: space-evenly;
+
+
+}
+#section-chat{
+    flex-basis: 30%;
+    border: 1px solid black;
+
+}
+#btn-exit{
+    background: red;
+    padding: 15px;
+    border-radius: 13px;
+    color: white;
+}
