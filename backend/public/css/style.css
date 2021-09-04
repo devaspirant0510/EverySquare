@@ -100,13 +100,13 @@ textarea{
 video{
     background: dodgerblue;
 }
-@media all and (min-width: 1200px) {
+@media all and (min-width: 1500px) {
     video{
         height: 480px;
         width: 600px;
     }
 }
-@media (min-width:500px) and (max-width:1199px) {
+@media (min-width:500px) and (max-width:1499px) {
     video{
         height: 240px;
         width: 300px;
