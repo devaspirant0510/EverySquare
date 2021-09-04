@@ -5,6 +5,13 @@ const btnHandleMic = document.querySelector("#btn-handle-mic");
 const btnHandlePresent = document.querySelector("#btn-handle-present");
 const btnHandleMessage = document.querySelector("#btn-handle-message");
 const sectionChat = document.querySelector("#section-chat");
+const formChatSend = document.querySelector("#form-chat-send");
+const inputChat = document.querySelector("#input-send-chat");
+const listChat = document.querySelector("#list-chat");
+
+const chatPeople = {
+    all:"전체",
+}
 
 const videoChatOptions = {
     video:true,
@@ -45,7 +52,6 @@ navigator.mediaDevices.getUserMedia(options).then(stream =>{
         call.on("close",()=>{
             console.log("my video close")
             video.remove();
-            videoGrid.removeChild(video);
         });
     });
     socket.emit("mesg","adfs");
@@ -101,8 +107,36 @@ function addVideoStream(video,stream,isMe){
         video.play();
     });
     videoGrid.append(video);
+;
+}
+function addChatMessageUI(content,sender,receiver){
+    const liTag = document.createElement("li");
+    liTag.style.border = "1px solid black";
+    liTag.textContent = `${sender} : ${content}`;
+
+    listChat.append(liTag);
+
+
 
 }
+// 채팅 받았을때
+socket.on("message",(content,roomKey,sender,receiver)=>{
+    console.log(content)
+    addChatMessageUI(content,sender,receiver);
+
+
+});
+// 채팅 전송
+formChatSend.addEventListener("submit",async (evt)=>{
+    evt.preventDefault();
+    if (inputChat.value !==""){
+        console.log("/room/"+ROOM_KEY+" 로 메시지 전송")
+        socket.emit("message",inputChat.value,ROOM_KEY,USER_ID,chatPeople.all);
+
+    }else{
+        alert("메시지를 입력해줏에ㅛ");
+    }
+});
 function handleVideoConfigure(stream){
     // 카메라 끄기, 켜기 버튼을 눌렀을때
     btnHandleCam.addEventListener("click",(evt)=>{
@@ -148,7 +182,6 @@ function handleVideoConfigure(stream){
             videoChatOptions.isShowChat = true;
             sectionChat.style.display = "none";
         }
-
-
     });
 }
+
