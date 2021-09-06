@@ -8,6 +8,8 @@ const sectionChat = document.querySelector("#section-chat");
 const formChatSend = document.querySelector("#form-chat-send");
 const inputChat = document.querySelector("#input-send-chat");
 const listChat = document.querySelector("#list-chat");
+const selectSendChatUser = document.querySelector("#select-send-chat-user");
+
 
 const chatPeople = {
     all:"전체",
@@ -19,8 +21,7 @@ const videoChatOptions = {
     screenShare:false,
     isShowChat:false,
 }
-const ROOM_KEY = window.location.pathname.split("/")[2]
-const socket = io.connect("http://127.0.0.1:8081/",{
+const socket = io.connect("http://127.0.0.1:8081/room",{
     path:"/socket.io",
     transport:['websocket']
 });
@@ -36,10 +37,14 @@ const options = {
 
 //const getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
 let myPeerId = "";
+let myStream = "";
+let userList = "";
 
 // 내 로컬 비디오 연결
 navigator.mediaDevices.getUserMedia(options).then(stream =>{
-    console.log(stream);
+    console.log("local video connect");
+    console.log("socket emit add-list ",USER_ID,USER_NAME);
+    myStream = stream;
     const video = document.createElement("video");
     addVideoStream(video,stream,true);
     peer.on("call",(call)=>{
@@ -75,14 +80,38 @@ socket.on("user-disconnect",(id)=>{
         console.log(peers[id]);
         peers[id].close();
     }
-})
-
-peer.on("open",id=>{
-    console.log("my video open peer on",id);
-    console.log(ROOM_KEY,id,USER_INFO)
-    socket.emit("join-room",ROOM_KEY,id,USER_INFO);
 });
 
+
+peer.on("open",id=>{
+    console.log("peer on open")
+    console.log("my video open peer on",id);
+    myPeerId = id;
+
+    console.log(myStream,id)
+    // room 연결 (서버쪽에서 socket.join() 으로 룸가입
+    socket.emit("join-room",ROOM_KEY,id,USER_INFO);
+    socket.emit("add-list",ROOM_KEY,USER_ID,USER_NAME)
+});
+
+// 참가중인 유저리스트
+socket.on("user-list",(userList)=>{
+    this.userList = userList;
+    Object.entries(userList).map(val=>{
+        addSelectOption(val[0],val[1]);
+    });
+
+    console.log(userList);
+})
+function addSelectOption(userId,userName){
+    // 드롭다운 아이템에 자기자긴은 제외
+    if (userId!==USER_ID){
+        const option = document.createElement("option");
+        option.className = userId;
+        option.textContent = userName;
+        selectSendChatUser.append(option);
+    }
+}
 // 유저가 입장할때 peerjs 를통해 유저 스티림을 가져옴
 function connectUser(peerId,stream){
     const call = peer.call(peerId,stream);
@@ -107,12 +136,15 @@ function addVideoStream(video,stream,isMe){
         video.play();
     });
     videoGrid.append(video);
-;
 }
-function addChatMessageUI(content,sender,receiver){
+function addChatMessageUI(content,sender,receiver,isPublic){
     const liTag = document.createElement("li");
     liTag.style.border = "1px solid black";
-    liTag.textContent = `${sender} : ${content}`;
+    if(isPublic){
+        liTag.textContent = `${this.userList[sender]} : ${content}`;
+    }else{
+        liTag.textContent = `${this.userList[sender]}의 개인메시지 : ${content}`;
+    }
 
     listChat.append(liTag);
 
@@ -120,9 +152,9 @@ function addChatMessageUI(content,sender,receiver){
 
 }
 // 채팅 받았을때
-socket.on("message",(content,roomKey,sender,receiver)=>{
+socket.on("message",(content,roomKey,sender,receiver,isPublic)=>{
     console.log(content)
-    addChatMessageUI(content,sender,receiver);
+    addChatMessageUI(content,sender,receiver,isPublic);
 
 
 });
@@ -131,7 +163,17 @@ formChatSend.addEventListener("submit",async (evt)=>{
     evt.preventDefault();
     if (inputChat.value !==""){
         console.log("/room/"+ROOM_KEY+" 로 메시지 전송")
-        socket.emit("message",inputChat.value,ROOM_KEY,USER_ID,chatPeople.all);
+        if(selectSendChatUser.value==="전체"){
+            socket.emit("message",inputChat.value,ROOM_KEY,USER_ID,chatPeople.all,true);
+        }else{
+            console.log(userList)
+            const optionList = selectSendChatUser.options;
+            const selectIdx = selectSendChatUser.selectedIndex;
+            const recId = optionList[selectIdx].className;
+
+            socket.emit("message",inputChat.value,ROOM_KEY,USER_ID,recId,false);
+        }
+        inputChat.value = "";
 
     }else{
         alert("메시지를 입력해줏에ㅛ");

@@ -60,6 +60,9 @@
     <main id="main-screen">
         <section>
             <button>
+                회원탈퇴
+            </button>
+            <button id="btn-kakao-logout">
                 로그아웃
             </button>
 
@@ -84,6 +87,8 @@
 
 
 {% block script %}
-
+<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 <script src="/index.js"></script>
+<script src="setting.js"></script>
+<script src="/login.js"></script>
 {% endblock %}

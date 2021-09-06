@@ -19,7 +19,8 @@ router.get("/room/:id",async (req,res,next)=>{
             const userInfo = util.getSessionValue(req,"user");
             if(userInfo){
                 res.render("roominfo",{
-                    userInfo
+                    userInfo,
+                    roomKey:req.params.id,
                 });
             }else{
                 res.redirect("/")
