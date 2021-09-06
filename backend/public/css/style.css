@@ -140,3 +140,7 @@ video{
     height: 200px;
     width: 200px;
 }
+#list-chat{
+    height: 600px;
+    overflow: auto;
+}

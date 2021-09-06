@@ -14,8 +14,8 @@
         profileURL: USER_PROFILE_URL,
         nickname: USER_NAME
     }
+    const ROOM_KEY = "{{roomKey}}}";
 
-    console.log("fasd", USER_INFO)
 </script>
 <main id="main-screen">
     <section id="section-main">
@@ -29,8 +29,8 @@
             <div>
                 <span>
 
-                <select>
-                    <option>전체</option>
+                <select id="select-send-chat-user">
+                    <option class="{{roomKey}}">전체</option>
                 </select>
                 </span>
                 <span>
