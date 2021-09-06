@@ -35,6 +35,7 @@ const options = {
 }
 
 //const getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+let myPeerId = "";
 
 // 내 로컬 비디오 연결
 navigator.mediaDevices.getUserMedia(options).then(stream =>{
@@ -54,7 +55,6 @@ navigator.mediaDevices.getUserMedia(options).then(stream =>{
             video.remove();
         });
     });
-    socket.emit("mesg","adfs");
     console.log("socket on join 대기");
     socket.on("message",(msg)=>{
         console.log(msg)

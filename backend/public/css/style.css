@@ -134,3 +134,9 @@ video{
     border-radius: 13px;
     color: white;
 }
+
+#profile-img{
+    border-radius: 70%;
+    height: 200px;
+    width: 200px;
+}

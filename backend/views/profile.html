@@ -60,30 +60,29 @@
 
     <main id="main-screen">
         <section>
-            <form id="form-search">
-                <input id="input-search-query" name="input-search-query"/>
+            <img id="profile-img" src="{{userInfo.profileURL}}"/><br>
+            <form id="form-upload-image" method="post"
+                  action="/profile" enctype="multipart/form-data">
+                <button id="btn-change-profile">
+                    <i class="material-icons">image</i>
+                    <input name="image" type="file">
+                </button>
                 <button type="submit">
-                    검색
+                    이미지 변경
                 </button>
             </form>
+            <button id="btn-default-image">
+                <i class="material-icons">person</i>
+                <span>
+                    기본이미지로
+                </span>
+            </button>
+            <div>
+                <h2>{{userInfo.nickname}}</h2>
+                <h3>{{userInfo.email}}</h3>
 
-            {% for room in roomList %}
-            <div id="room-list-view" style="border: 1px solid black; overflow: auto">
-                {% if room.isPublic %}
-                <div>
-                    <span>{{room.roomName}}</span>
-                    <span>{{room.maxUser}}</span>
-                </div>
-                <div>{{room.roomDescription}}</div>
-                <button>
-                    참가
-                </button>
-                <button>
-                    상세보기
-                </button>
-                {% endif %}
             </div>
-            {% endfor %}
+
 
         </section>
     </main>
@@ -108,5 +107,5 @@
 {% block script %}
 
 <script src="/index.js"></script>
-<script src="/search.js"></script>
+<script src="/profile.js"></script>
 {% endblock %}
