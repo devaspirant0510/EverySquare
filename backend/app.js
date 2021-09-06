@@ -61,17 +61,28 @@ const sessionMiddleware = expressSession({
 });
 app.use(sessionMiddleware);
 // cors 세팅
+/*
 const corsConfig = cors({
     origin: true,
     credentials: true,
 })
 app.use(corsConfig);
 app.options("*", corsConfig);
+*/
 
+// 멀티파트 데이터 저장할 경로
+const IMAGE_PATH = path.join(__dirname,"public","img","profile");
+try{
+    fs.readdirSync(IMAGE_PATH);
+}catch (err){
+    console.log(IMAGE_PATH+" 에 폴더 생성");
+    fs.mkdirSync(IMAGE_PATH)
+}
 // 정적파일 로드
 app.use(express.static(path.join(__dirname,"public","css")));
 app.use(express.static(path.join(__dirname,"public","js")));
 app.use(express.static(path.join(__dirname,"public","img")));
+app.use("/user/file",express.static(path.join(__dirname,"public","img","profile")));
 
 // 라우터
 app.use(IndexRouter);

@@ -2,8 +2,12 @@ const btnGoToLoginPage = document.querySelector("#btn-go-to-login-page");
 const navMenu = document.querySelector("#nav-menu");
 const navDefaultMenu = document.querySelector("#nav-default-menu");
 
-console.log("afsd")
-console.log(btnGoToLoginPage)
+const navMenuProfile = document.querySelector("#nav-default-menu");
+const navDefaultMenuProfile = document.querySelector("#nav-default-menu-profile");
+
+const imgProfile = document.querySelector("#img-profile");
+const imgDefaultProfile = document.querySelector("#img-default-profile");
+
 if(btnGoToLoginPage){
     btnGoToLoginPage.addEventListener("click",async (evt)=>{
         location.href = "/login";
@@ -20,5 +24,28 @@ navDefaultMenu.addEventListener("mouseenter",()=>{
 navMenu.addEventListener("mouseleave",()=>{
     navDefaultMenu.style.display = "flex"
     navMenu.style.display = "none"
+
+});
+
+navMenuProfile.addEventListener("click",(evt)=>{
+    evt.preventDefault();
+    console.log("onclick nav menu profile")
+    location.href = "/profile";
+});
+navDefaultMenuProfile.addEventListener("click",(evt)=>{
+    evt.preventDefault();
+    console.log("onclick nav default menu profile")
+    location.href = "/profile";
+});
+
+imgProfile.addEventListener("click",(evt)=>{
+    evt.preventDefault();
+    console.log("onclick img profile")
+    location.href = "/profile";
+});
+imgDefaultProfile.addEventListener("click",(evt)=>{
+    evt.preventDefault();
+    console.log("onclick img default profile")
+    location.href = "/profile";
 
 })

@@ -4,13 +4,19 @@ module.exports = (server,app)=>{
     const io = socketIO(server,{
         path:"/socket.io"
     });
+    const userList = {
+
+    };
     const room = io.of("/room");
     io.on("connection",async (socket)=>{
         console.log("접속")
+        // peerjs 서버 join room
         socket.on("join-room",(roomKey,peerId,userInfo)=>{
             console.log("socket on join-room")
             console.log(userInfo.nickname)
             console.log("join-room",roomKey,peerId,userInfo);
+            userList[userInfo.id] = userInfo.nickname;
+            console.log(userList)
             socket.join(roomKey);
             socket.to(roomKey).broadcast.emit("user-connect",userInfo.nickname,peerId);
 
@@ -39,8 +45,9 @@ module.exports = (server,app)=>{
 
             socket.on("disconnect",()=>{
                 console.log("socket disconnected");
-                console.log(userInfo.nickname)
-                socket.to(roomKey).broadcast.emit("user-disconnect",userInfo.id);
+                console.log(peerId)
+
+                socket.to(roomKey).broadcast.emit("user-disconnect",peerId);
             });
         })
     });
