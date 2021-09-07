@@ -20,7 +20,7 @@ function kakaoLogin() {
                     userInfo.id = response.id;
                     userInfo.email = kakaoAcc.email;
                     userInfo.nickname = kakaoProfile.nickname;
-                    userInfo.profileURL = kakaoProfile.profileURL;
+                    userInfo.profileURL = kakaoProfile.profile_image_url;
 
                     const result = await axios.post("/login",userInfo);
                     console.log(result);

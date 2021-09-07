@@ -31,7 +31,7 @@ module.exports = class User extends Sequelize.Model{
                 defaultValue: Sequelize.NOW,
             },
             socketId:{
-                type:Sequelize.INTEGER,
+                type:Sequelize.STRING,
                 allowNull:true
             }
         },{
@@ -46,7 +46,14 @@ module.exports = class User extends Sequelize.Model{
         });
     }
     static associate(db){
-        db.User.hasOne(db.Room)
+        db.User.belongsTo(db.Room,{
+            foreignKey:"joinRoomId",
+            id:"roomKey"
+        });
+        db.User.hasOne(db.Room,{
+            as:"master",
+            constraints:false,
+        });
 
     }
 }

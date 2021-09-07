@@ -9,7 +9,9 @@ const nunjucks = require("nunjucks");
 const {ExpressPeerServer} = require("peer");
 
 dotenv.config();
-
+console.log(process.env.SERVER_ENV)
+const host = process.env.SERVER_ENV==="local"?"http://127.0.0.1":"https://www.every-square.shop";
+console.log(host)
 const path = require("path");
 const https = require("https");
 const http = require("http");
@@ -69,7 +71,6 @@ const corsConfig = cors({
 app.use(corsConfig);
 app.options("*", corsConfig);
 */
-
 // 멀티파트 데이터 저장할 경로
 const IMAGE_PATH = path.join(__dirname,"public","img","profile");
 try{

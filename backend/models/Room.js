@@ -24,14 +24,14 @@ module.exports = class Room extends Sequelize.Model{
                 type:Sequelize.STRING,
                 allowNull:true,
             },
+            joinUser:{
+                type:Sequelize.JSON,
+                allowNull:true,
+            },
             isPublic:{
                 type:Sequelize.BOOLEAN,
                 allowNull:false,
             },
-            onJoinUser:{
-                type:Sequelize.JSON,
-                allowNull:true,
-            }
         },{
             sequelize,
             timestamps: false,
@@ -44,6 +44,13 @@ module.exports = class Room extends Sequelize.Model{
         });
     }
     static associate(db){
-        db.Room.belongsTo(db.User);
+        db.Room.hasMany(db.User,{
+            foreignKey:"joinRoomId",
+            id:"roomKey"
+        });
+        db.Room.belongsTo(db.User,{
+            as:"master",
+            constraints:false
+        })
     }
 }

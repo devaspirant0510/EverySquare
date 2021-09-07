@@ -29,8 +29,16 @@ router.get("/room/:id",async (req,res,next)=>{
     }catch (err){
         next(err);
     }
+});
+
+router.patch("/room/:id",async (req,res,next)=>{
+    try{
 
 
+    }catch (err){
+        next(err);
+
+    }
 
 })
 module.exports = router;

@@ -2,6 +2,7 @@ const express = require("express");
 
 const {User} = require("../models");
 const util = require("../util/common");
+const constants = require("../util/constants");
 
 const router = express.Router();
 
@@ -28,7 +29,8 @@ router.get("/login_callback_kakao",async (req,res,next)=>{
 
 router.post("/login", async (req, res, next) => {
     try {
-        const {id, nickname, email, profileURL} = req.body;
+        const {id, nickname, email} = req.body;
+        let profileURL = req.body.profileURL;
         let sessionData;
         console.log("user id : ", id);
         console.log("user nickname : ", nickname);
@@ -41,6 +43,10 @@ router.post("/login", async (req, res, next) => {
             }
         });
         console.log(isRegister)
+        // 프로필 사진이 없을때 기본 이미지로
+        if (!profileURL){
+            profileURL=constants.defaultProfileURL;
+        }
         // DB 에 회원정보가 없을경우 신구회원이기 때문에 정보를 그대로 저장
         if (!isRegister) {
             let result = await User.create({

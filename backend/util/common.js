@@ -12,8 +12,13 @@ const getSessionValue = (req,cookieKey) =>{
     const ckey = req.signedCookies[cookieKey];
     return req.session[ckey];
 }
+const setSessionValue = (req,cookieKey,val)=>{
+    const ckey = req.signedCookies[cookieKey];
+    req.session[ckey] = val;
+}
 
 module.exports = {
     convertToJson,
-    getSessionValue
+    getSessionValue,
+    setSessionValue
 };
