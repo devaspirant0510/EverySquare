@@ -1,12 +1,13 @@
 const express = require("express");
 const {convertToJson,getSessionValue} = require("../util/common");
+const {Room} = require("../models");
 
 const router = express.Router();
 
 router.get("/",async (req,res,next)=>{
     try{
         const userInfo = getSessionValue(req,"user");
-        console.log(userInfo)
+        console.log("user info ",userInfo)
         if (userInfo){
             res.render("index",{userInfo})
         }else{

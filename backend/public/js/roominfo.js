@@ -48,7 +48,7 @@ navigator.mediaDevices.getUserMedia(options).then(stream =>{
     const video = document.createElement("video");
     addVideoStream(video,stream,true);
     peer.on("call",(call)=>{
-        console.log("my video call")
+        console.log("user video call")
         call.answer(stream);
         const video = document.createElement("video");
         call.on("stream",(userVideoStream)=>{
@@ -83,7 +83,7 @@ socket.on("user-disconnect",(id)=>{
 });
 
 
-peer.on("open",id=>{
+peer.on("open",async (id)=>{
     console.log("peer on open")
     console.log("my video open peer on",id);
     myPeerId = id;
@@ -91,7 +91,18 @@ peer.on("open",id=>{
     console.log(myStream,id)
     // room 연결 (서버쪽에서 socket.join() 으로 룸가입
     socket.emit("join-room",ROOM_KEY,id,USER_INFO);
+    console.log("socket emit add list")
+
     socket.emit("add-list",ROOM_KEY,USER_ID,USER_NAME)
+
+/*
+    // 방에 참가한 유저 정보를 넘김
+    await axios.patch(`/room/${ROOM_KEY}`,{
+        count:Object.entries(userList).length,
+        userId:USER_ID
+    });
+*/
+
 });
 
 // 참가중인 유저리스트
@@ -135,6 +146,7 @@ function addVideoStream(video,stream,isMe){
     video.addEventListener("loadedmetadata",()=>{
         video.play();
     });
+    video.autoplay = true;
     videoGrid.append(video);
 }
 function addChatMessageUI(content,sender,receiver,isPublic){
@@ -145,11 +157,7 @@ function addChatMessageUI(content,sender,receiver,isPublic){
     }else{
         liTag.textContent = `${this.userList[sender]}의 개인메시지 : ${content}`;
     }
-
     listChat.append(liTag);
-
-
-
 }
 // 채팅 받았을때
 socket.on("message",(content,roomKey,sender,receiver,isPublic)=>{
@@ -176,7 +184,7 @@ formChatSend.addEventListener("submit",async (evt)=>{
         inputChat.value = "";
 
     }else{
-        alert("메시지를 입력해줏에ㅛ");
+        alert("메시지를 입력해주세요");
     }
 });
 function handleVideoConfigure(stream){

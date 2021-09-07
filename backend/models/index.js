@@ -24,6 +24,6 @@ db.Room = Room;
 
 // 테이블간 관계정의
 User.associate(db);
-Room.associate(db)
+Room.associate(db);
 
 module.exports = db;
