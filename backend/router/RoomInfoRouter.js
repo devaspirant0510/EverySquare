@@ -27,6 +27,7 @@ router.get("/room/:id",async (req,res,next)=>{
                     res.render("roominfo",{
                         userInfo,
                         roomKey:req.params.id,
+                        roomInfo:isRoom,
                     });
                 }else{
                     res.json(util.convertToJson(400,"fail: the room is full"));

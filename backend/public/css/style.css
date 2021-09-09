@@ -28,7 +28,7 @@ textarea{
     border-radius: 20px;
     padding: 10px;
     opacity: 0.8;
-
+    margin-left: auto;
 }
 
 .index-not-login{
@@ -132,7 +132,6 @@ video{
 #section-video{
     flex-basis: 100%;
     display: flex;
-    justify-content: space-evenly;
 
 
 }
@@ -183,4 +182,14 @@ video{
     margin-right: 55px;
     margin-top: 8px;
 
+}
+.video-item{
+    border-radius: 15px;
+    border: 2px solid darkgray;
+    margin: 8px;
+    padding: 8px;
+}
+.video-item>div{
+    margin-left: 4px;
+    margin-top: 4px;
 }

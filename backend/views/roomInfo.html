@@ -14,9 +14,11 @@
         profileURL: USER_PROFILE_URL,
         nickname: USER_NAME
     }
+    const ROOM_NAME = "{{roomInfo.roomName}}";
     const ROOM_KEY = "{{roomKey}}";
 
 </script>
+<h2>방제목 : {{roomInfo.roomName}}</h2>
 <main id="main-screen">
     <section id="section-main">
         <section id="section-video">
@@ -39,51 +41,54 @@
             </div>
         </section>
     </section>
-    <footer>
-        <button id="btn-handle-cam">
-            <div id="btn-video-cam">
-                <i class="material-icons">videocam</i><br>
-                <i>카메라</i>
-            </div>
-            <div id="btn-video-cam-off" style="display:none;">
-                <i class="material-icons">videocam_off</i><br>
-                <i>카메라 끄기</i>
-            </div>
-        </button>
-        <button id="btn-handle-mic">
-            <div id="btn-mic">
-                <i class="material-icons">mic</i><br>
-                <i>마이크</i>
-            </div>
-            <div id="btn-mic-off" style="display:none;">
-                <i class="material-icons">mic_off</i><br>
-                <i>마이크 끄기</i>
-            </div>
-        </button>
-        <button id="btn-handle-present">
-            <div id="btn-present-to-all">
-                <i class="material-icons present-to-all">present_to_all</i><br>
-                <i>화면공유</i>
-            </div>
-            <div id="cancel-presentation" style="display:none;">
-                <i class="material-icons">cancel_presentation</i><br>
-                <i>화면공유 종료</i>
-            </div>
-        </button>
-        <button id="btn-handle-message">
-            <div id="btn-message">
-                <i class="material-icons">messages</i><br>
-                <i>채팅창</i>
-            </div>
-            <div id="btn-message-off" style="display:none;">
-                <i class="material-icons">speaker_notes_off</i><br>
-                <i>채팅창 닫기</i>
-            </div>
-        </button>
-        <button class="custom-btn-waring" id="btn-exit" style="float: end">
-            나가기
-        </button>
+    <footer style="background-color: lightgray; padding: 4px">
+        <div style="display: flex">
+            <button id="btn-handle-cam" style="border-radius: 70%">
+                <div id="btn-video-cam">
+                    <i class="material-icons">videocam</i><br>
+                    <i>카메라</i>
+                </div>
+                <div id="btn-video-cam-off" style="display:none;">
+                    <i class="material-icons">videocam_off</i><br>
+                    <i>카메라 끄기</i>
+                </div>
+            </button>
+            <button id="btn-handle-mic" style="border-radius: 70%">
+                <div id="btn-mic">
+                    <i class="material-icons">mic</i><br>
+                    <i>마이크</i>
+                </div>
+                <div id="btn-mic-off" style="display:none;">
+                    <i class="material-icons">mic_off</i><br>
+                    <i>마이크 끄기</i>
+                </div>
+            </button>
+            <button id="btn-handle-present" style="border-radius: 70%">
+                <div id="btn-present-to-all">
+                    <i class="material-icons present-to-all">present_to_all</i><br>
+                    <i>화면공유</i>
+                </div>
+                <div id="cancel-presentation" style="display:none;">
+                    <i class="material-icons">cancel_presentation</i><br>
+                    <i>화면공유 종료</i>
+                </div>
+            </button>
+            <button id="btn-handle-message" style="border-radius: 70%">
+                <div id="btn-message">
+                    <i class="material-icons">messages</i><br>
+                    <i>채팅창</i>
+                </div>
+                <div id="btn-message-off" style="display:none;">
+                    <i class="material-icons">speaker_notes_off</i><br>
+                    <i>채팅창 닫기</i>
+                </div>
+            </button>
+            <button class="custom-btn-waring" id="btn-exit" style="float: end">
+                나가기
+            </button>
+        </div>
     </footer>
+
 </main>
 {% else %}
 <div class="index-not-login">

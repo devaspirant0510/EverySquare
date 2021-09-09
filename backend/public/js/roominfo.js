@@ -21,7 +21,7 @@ const videoChatOptions = {
     screenShare:false,
     isShowChat:false,
 }
-const socket = io.connect("http://127.0.0.1:8081/room",{
+const socket = io.connect("/room",{
     path:"/socket.io",
     transport:['websocket']
 });
@@ -48,6 +48,9 @@ navigator.mediaDevices.getUserMedia(options).then(stream =>{
     console.log("socket emit add-list ",USER_ID,USER_NAME);
     myStream = stream;
     video = document.createElement("video");
+    console.log(stream)
+    console.log("media stream",USER_ID,stream.id)
+    socket.emit("media-stream-id",USER_ID,stream.id);
     addVideoStream(video,stream,true);
     peer.on("call",(call)=>{
         console.log("user video call")
@@ -149,6 +152,13 @@ function addVideoStream(video,stream,isMe){
         video.play();
     });
     video.autoplay = true;
+    console.log(stream);
+    const baseVideo = document.createElement("div");
+    baseVideo.classList.add("video-item");
+    const name = document.createElement("div");
+    name.textContent = USER_NAME;
+    baseVideo.append(name,video)
+    video.style.margin="4px";
     videoGrid.append(video);
 }
 function addChatMessageUI(content,sender,receiver,isPublic,profileURL){
@@ -290,6 +300,8 @@ function handleVideoConfigure(stream){
                 audio: true,
                 video: true
             }).then(function(_stream){
+                alert("아직 준비중입니다.");
+/*
                 //success
                 video.srcObject = _stream;
                 video.addEventListener("loadedmetadata",()=>{
@@ -298,6 +310,7 @@ function handleVideoConfigure(stream){
                 video.autoplay = true;
                 console.log(stream.getVideoTracks()[0])
                 console.log(peer)
+*/
             }).catch(function(e){
                 //error;
             });
