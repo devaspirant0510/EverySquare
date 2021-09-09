@@ -85,6 +85,9 @@ module.exports = (server, app) => {
                 }
             });
         });
+        socket.on("media-stream-id",(a,b)=>{
+            console.log("media",a,b);
+        })
         // 유저가 방에 참가할때마다 userLIst 객체에 추가
         socket.on("add-list", async (roomId, userId, userName) => {
             console.log("socket on add-list", userId, userName)

@@ -81,7 +81,7 @@
                 {% else %}
                 {% for room in roomList %}
                 <div id="room-list-view" class="custom-card-view" style="border: 1px solid black; padding: 10px">
-                    {% if room.isPublic %}
+                    {% if room.isPublic==1 %}
                     <div style="display: none">{{room.roomKey}}</div>
                     <div>
                         <span>방제목 : {{room.roomName}}</span>
@@ -94,6 +94,7 @@
                     <button>
                         상세보기
                     </button>
+                    {% else %}
                     {% endif %}
                 </div>
                 {% endfor %}

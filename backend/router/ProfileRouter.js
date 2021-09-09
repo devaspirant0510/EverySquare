@@ -57,14 +57,16 @@ router.post("/profile", upload.single("image"), async (req, res, next) => {
         console.log(req.body)
         console.log(req.file.filename)
         const userInfo = util.getSessionValue(req, "user");
-        const result = await User.update({profileURL: `http://127.0.0.1:8081/user/file/${req.file.filename}`},
+        const result = await User.update(
+            {profileURL: `${constants.currentHost}/user/file/${req.file.filename}`},
             {
                 where: {
                     id: userInfo.id
                 }
             });
         console.log(`변경된 칼럼수 : ${result[0]}`);
-        const changeData = await User.findOne({where:{
+        const changeData = await User.findOne({
+            where:{
             id:userInfo.id
             }
         });

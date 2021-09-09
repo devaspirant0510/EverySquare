@@ -21,7 +21,9 @@ router.get("/search",async (req,res,next)=>{
         }
         // 전체보여주기 (검색안했을때)
         else{
-            roomList = await Room.findAll({});
+            roomList = await Room.findAll({where:{
+                isPublic:1
+                }});
 
         }
         const userInfo = util.getSessionValue(req,"user");
