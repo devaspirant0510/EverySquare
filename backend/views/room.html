@@ -77,15 +77,16 @@
                 </fieldset>
                 <fieldset>
                     <legend>공개여부</legend>
-                    <label for="radio-room-public">
-                        공개
-                        <input id="radio-room-public" type="radio">
-                    </label>
-                    </br>
-                    <label for="radio-room-private">
-                        비공개
-                        <input id="radio-room-private" type="radio">
-                    </label>
+                    <div id="radio-group">
+                        <label for="radio-room-public">
+                            공개
+                            <input id="radio-room-public" type="radio" name="is-public">
+                        </label>
+                        <label for="radio-room-private">
+                            비공개
+                            <input id="radio-room-private" type="radio" name="is-public">
+                        </label>
+                    </div>
                 </fieldset>
                 <button id="btn-submit-room-create" type="submit">
                     생성하기

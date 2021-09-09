@@ -7,7 +7,7 @@
 div,span,h1,h2,h3,h4,h5,h6{
     font-family: ROKABold;
 }
-ol, ul {
+ol, ul,li {
     list-style: none;
     margin:0; padding:0;
 }
@@ -16,6 +16,19 @@ a{
 }
 textarea{
     resize: none;
+}
+.custom-btn{
+    background-color: dodgerblue;
+    border-radius: 20px;
+    padding: 10px;
+    opacity: 0.8;
+}
+.custom-btn-waring{
+    background-color: red;
+    border-radius: 20px;
+    padding: 10px;
+    opacity: 0.8;
+
 }
 
 .index-not-login{
@@ -129,10 +142,6 @@ video{
 
 }
 #btn-exit{
-    background: red;
-    padding: 15px;
-    border-radius: 13px;
-    color: white;
 }
 
 #profile-img{
@@ -143,4 +152,35 @@ video{
 #list-chat{
     height: 600px;
     overflow: auto;
+}
+.custom-card-view{
+    border-radius: 30px;
+    border: 3px solid darkgrey;
+    margin: 5px;
+    padding: 8px;
+}
+.my-chat{
+    border-radius: 15px;
+    background-color: dodgerblue;
+    padding: 5px;
+    align-content: center;
+    margin-left: 55px;
+    margin-top: 8px;
+}
+#other-chat{
+
+}
+.other-chat > img{
+    width: 30px;
+    height: 30px;
+    border-radius: 70%;
+}
+.other-chat > div{
+    border-radius: 15px;
+    background-color: darkgray;
+    padding: 5px;
+    align-content: center;
+    margin-right: 55px;
+    margin-top: 8px;
+
 }

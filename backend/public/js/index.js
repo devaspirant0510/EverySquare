@@ -8,6 +8,8 @@ const navDefaultMenuProfile = document.querySelector("#nav-default-menu-profile"
 const imgProfile = document.querySelector("#img-profile");
 const imgDefaultProfile = document.querySelector("#img-default-profile");
 
+const sectionProfileCard = document.querySelector("#section-profile-card");
+
 if(btnGoToLoginPage){
     btnGoToLoginPage.addEventListener("click",async (evt)=>{
         location.href = "/login";
@@ -48,4 +50,8 @@ imgDefaultProfile.addEventListener("click",(evt)=>{
     console.log("onclick img default profile")
     location.href = "/profile";
 
+});
+sectionProfileCard.addEventListener("click",()=>{
+    console.log("on click profile card")
+    location.href = "/profile"
 })

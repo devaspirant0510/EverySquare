@@ -32,6 +32,7 @@ router.post("/room",async (req,res,next)=>{
         if(!UserId){
             UserId = util.getSessionValue(req,"user").id;
         }
+        console.log(isPublic)
         // 방 url 은 중복되면 안되기때문에 uuid v4 로 생성
         const roomKey = uuidV4();
         const result = await Room.create({

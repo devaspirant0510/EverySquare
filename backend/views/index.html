@@ -7,11 +7,11 @@
 <div id="root-page">
     <nav id="nav-menu" style="display: none">
         <div id="nav-menu-profile">
-            <img id="img-profile" src="{{userInfo.profileURL}}">
-            <h3>
+            <img style="margin-top: 8px" id="img-profile" src="{{userInfo.profileURL}}">
+            <h3 style="margin: 4px">
                 {{userInfo.nickname}}
             </h3>
-            <h4>
+            <h4 style="margin: 4px">
                 {{userInfo.email}}
 
             </h4>
@@ -47,7 +47,7 @@
     </nav>
     <nav id="nav-default-menu">
         <div id="nav-default-menu-profile">
-            <img id="img-default-profile" src="{{userInfo.profileURL}}">
+            <img style="margin-top: 8px" id="img-default-profile" src="{{userInfo.profileURL}}">
         </div>
         <img class="nav-menu-icon" src="/navi_item_home.png"/>
         <img class="nav-menu-icon" src="/navi_item_room.png"/>
@@ -56,8 +56,27 @@
 
     </nav>
     <main id="main-screen">
-        <section>
+        <section id="section-profile-card" class="custom-card-view">
+            <h1>내프로필</h1>
+            <div style="display: flex">
+                <img src="{{userInfo.profileURL}}" style="height: 200px; width: 200px; border-radius: 70%; border: 1px solid darkgrey; margin: 4px " >
+                <span>
+                    <h2>{{userInfo.nickname}}</h2>
+                    <h3>{{userInfo.email}}</h3>
+                </span>
+            </div>
+        </section>
+        <section id="section-recommend-room" class="custom-card-view">
+            <h1>추천하는 방</h1>
+            <div style="height: 500px; overflow: auto">
 
+            </div>
+        </section>
+        <section id="section-lasted-room">
+            <h1>최근에 생성된 방</h1>
+            <div style="height: 500px; overflow: auto">
+
+            </div>
         </section>
     </main>
 

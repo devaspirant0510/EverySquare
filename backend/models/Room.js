@@ -16,6 +16,11 @@ module.exports = class Room extends Sequelize.Model{
                 type:Sequelize.STRING,
                 allowNull:false
             },
+            currentUser:{
+                type:Sequelize.INTEGER,
+                allowNull:true,
+
+            },
             maxUser:{
                 type:Sequelize.INTEGER,
                 allowNull:false,
