@@ -58,11 +58,28 @@
 
     </nav>
     <main id="main-screen">
-        <section>
-            <button>
-                회원탈퇴
-            </button>
-            <button id="btn-kakao-logout">
+        <section style="margin: 15px">
+            <h1>방 입장시 기본설정</h1>
+            <fieldset>
+                <legend>카메라 설정</legend>
+                <label for="default-camera-on"> 카메라 켜진상태로 입장
+                    <input id="default-camera-on" type="radio" name="default-camera-setting">
+                </label>
+                <label for="default-camera-off"> 카메라 꺼진상태로 입장
+                    <input id="default-camera-off" type="radio" name="default-camera-setting">
+                </label>
+            </fieldset>
+            <fieldset>
+                <legend>마이크 설정</legend>
+                <label for="default-mic-on"> 마이크 켜진상태로 입장
+                    <input id="default-mic-on" type="radio" name="default-mic-setting">
+
+                </label>
+                <label for="default-mic-off"> 마이크 꺼진상태로 입장
+                    <input id="default-mic-off" type="radio" name="default-mic-setting">
+                </label>
+            </fieldset>
+            <button class="w3-btn" style="margin-top:15px;background: red; color: white" id="btn-kakao-logout">
                 로그아웃
             </button>
 

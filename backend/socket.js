@@ -1,5 +1,6 @@
 const socketIO = require("socket.io");
 const {User, Room} = require("./models");
+const {Obj} = require("nunjucks/src/object");
 
 module.exports = (server, app) => {
     const io = socketIO(server, {
@@ -17,11 +18,6 @@ module.exports = (server, app) => {
             console.log("socket on join-room")
             console.log("join-room", roomKey, peerId, userInfo);
             console.log(userList)
-            /*
-
-            */
-            /*
-            */
             socket.join(roomKey);
             socket.to(roomKey).broadcast.emit("user-connect", userInfo.nickname, peerId);
             // 참가한 방의 접속자 목록 가져옴
@@ -31,7 +27,7 @@ module.exports = (server, app) => {
                     roomKey
                 }
             });
-            if(!dbUser.joinUser){
+            if(!dbUser){
                 currentUserList = {};
             }else{
                 currentUserList = dbUser.joinUser;
@@ -42,7 +38,7 @@ module.exports = (server, app) => {
                 }});
 
             // 채팅 전송
-            socket.on("message", (content, roomId, sender, receiver, isPublic) => {
+            socket.on("message", (content, roomId, sender, receiver, isPublic,profileURL) => {
                 console.log(`content : ${content}`);
                 console.log(`roomId : ${roomId}`);
                 console.log(`sender : ${sender}`);
@@ -52,16 +48,16 @@ module.exports = (server, app) => {
                 if (isPublic) {
                     // 해당 룸으로 전송
                     console.log(roomId)
-                    room.to(roomId).emit("message", content, roomId, sender, receiver, true);
+                    room.to(roomId).emit("message", content, roomId, sender, receiver, true,profileURL);
                 }
                 // 개인챗으로 보낼때
                 else {
                     console.log(socketList)
                     console.log(socketList[receiver]);
                     // 상대한테 개인메시지 보내기
-                    room.to(socketList[receiver]).emit("message", content, roomId, sender, receiver, false);
+                    room.to(socketList[receiver]).emit("message", content, roomId, sender, receiver, false,profileURL);
                     // 나 자신한테도 보냄 ( 자신이 무슨 내용을 보냈는지 알려주기 위해)
-                    room.to(socket.id).emit("message", content, roomId, sender, receiver, false);
+                    room.to(socket.id).emit("message", content, roomId, sender, receiver, false,profileURL);
 
                 }
             });
@@ -70,7 +66,7 @@ module.exports = (server, app) => {
                 console.log("socket disconnected");
                 console.log(peerId)
                 delete userList[userInfo.id];
-                await Room.update({joinUser: userList}, {
+                await Room.update({joinUser: userList,currentUser:Object.entries(userList).length}, {
                     where: {
                         roomKey:roomKey
                     }
@@ -79,21 +75,23 @@ module.exports = (server, app) => {
                 // 방에 아무도 없을때 방 지움
                 await User.update({"joinRoomId":null},{where:{
                     id:userInfo.id
-                    }})
-                if(Object.entries(userInfo).length===0){
-                    await Room.delete({where:{
+                    }});
+                console.log(userList)
+                if(Object.entries(userList).length===0){
+                    await Room.destroy({where:{
                         roomKey:roomKey
                         }});
 
                 }
             });
-        })
+        });
         // 유저가 방에 참가할때마다 userLIst 객체에 추가
         socket.on("add-list", async (roomId, userId, userName) => {
             console.log("socket on add-list", userId, userName)
             userList[userId] = userName;
             console.log(`update db joinUser=${userList} where roomKey=${roomId}`)
-            await Room.update({joinUser: userList}, {
+            console.log(Object.entries(userList).length)
+            await Room.update({joinUser: userList,currentUser:Object.entries(userList).length}, {
                 where: {
                     roomKey:roomId
                 }

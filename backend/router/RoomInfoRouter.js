@@ -17,11 +17,20 @@ router.get("/room/:id",async (req,res,next)=>{
             throw new Error("url 이 올바르지 않습니다.");
         }else{
             const userInfo = util.getSessionValue(req,"user");
+            // 로그인 체크
             if(userInfo){
-                res.render("roominfo",{
-                    userInfo,
-                    roomKey:req.params.id,
-                });
+                // 입장할때 최대인원을 넘기지 않았는지 체크
+                console.log(isRoom.currentUser)
+                console.log(isRoom.maxUser);
+
+                if(isRoom.currentUser < isRoom.maxUser){
+                    res.render("roominfo",{
+                        userInfo,
+                        roomKey:req.params.id,
+                    });
+                }else{
+                    res.json(util.convertToJson(400,"fail: the room is full"));
+                }
             }else{
                 res.redirect("/")
             }

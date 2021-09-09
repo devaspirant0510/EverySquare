@@ -4,6 +4,8 @@ const path = require("path");
 const fs = require("fs");
 
 const util = require("../util/common");
+const constants = require("../util/constants");
+
 const {User} = require("../models");
 
 const router = express.Router();
@@ -74,7 +76,48 @@ router.post("/profile", upload.single("image"), async (req, res, next) => {
         next(err);
     }
 });
+router.patch("/profile",async (req,res,next)=>{
+    try {
+        const {userName} = req.body;
+        console.log(userName)
+        const userInfo = util.getSessionValue(req,"user");
+        console.log(userInfo.id)
+        const result = await User.update({nickname:userName},
+            {where:{
+            id:userInfo.id
+            }
+            });
+        userInfo.nickname = userName;
+        util.setSessionValue(req,"user",userInfo);
+        res.json(util.convertToJson(200,"ok"));
 
+    }catch (err){
+        next(err);
+    }
+});
+
+router.patch("/profile/default",async (req,res,next)=>{
+    try{
+        const userInfo = util.getSessionValue(req,"user");
+        await User.update(
+            {
+                profileURL:constants.defaultProfileURL
+            },
+            {
+            where:{
+                id:userInfo.id
+            }
+
+        });
+        userInfo.profileURL = constants.defaultProfileURL;
+        util.setSessionValue(req,"user",userInfo)
+        res.send(util.convertToJson(200,"ok"));
+
+    }catch (err){
+        next(err);
+    }
+
+});
 // 프로필 정보 업데이트
 /*
 router.patch("/profile",async (req,res,next)=>{

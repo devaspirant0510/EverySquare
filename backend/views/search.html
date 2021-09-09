@@ -59,23 +59,35 @@
     </nav>
 
     <main id="main-screen">
-        <section>
+        <section class="custom-card-view">
             <form id="form-search">
-                <input id="input-search-query" name="input-search-query"/>
-                <button type="submit">
-                    검색
-                </button>
+                <div style="display: flex">
+                    <label for="input-search-query" style="width: 100%">
+                        <input id="input-search-query" placeholder="검색어를 입력해주세요" name="input-search-query"
+                               style="padding: 8px; width: 100%; margin:8px;border-radius: 15px;">
+                    </label>
+                    <button class="material-icons" type="submit" style="margin: 8px; border-radius: 70%">
+                        search
+                    </button>
+                </div>
             </form>
-
-            <div style="overflow: auto; height: 1fr">
+            <div id="search-status">현재 검색된 방은 {{roomList.length}}개입니다.</div>
+            <a href="/search">모든방 보기</a>
+            <div id="list-search-root" style="overflow: auto; height: 800px">
+                {% if roomList==0 %}
+                    <h2>Opps...</h2>
+                    <h3>개설된 방이 없어요 직접 방을 만들어보세요!</h3>
+                    <a href="/room" style="background: dodgerblue">방만들러가기</a>
+                {% else %}
                 {% for room in roomList %}
-                <div id="room-list-view" style="border: 1px solid black;">
+                <div id="room-list-view" class="custom-card-view" style="border: 1px solid black; padding: 10px">
                     {% if room.isPublic %}
+                    <div style="display: none">{{room.roomKey}}</div>
                     <div>
-                        <span>{{room.roomName}}</span>
-                        <span>{{room.maxUser}}</span>
+                        <span>방제목 : {{room.roomName}}</span>
+                        <span style="float: end">참가인원 :</span> {{room.currentUser}}/{{room.maxUser}}</span>
                     </div>
-                    <div>{{room.roomDescription}}</div>
+                    <div style="margin-top: 10px; margin-bottom: 10px">{{room.roomDescription}}</div>
                     <button>
                         참가
                     </button>
@@ -85,7 +97,7 @@
                     {% endif %}
                 </div>
                 {% endfor %}
-
+                {% endif %}
             </div>
 
         </section>

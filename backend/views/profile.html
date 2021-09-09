@@ -59,7 +59,8 @@
     </nav>
 
     <main id="main-screen">
-        <section>
+        <h1 style="align-content: center;">프로필 수정</h1>
+        <section style="align-content: center">
             <img id="profile-img" src="{{userInfo.profileURL}}"/><br>
             <form id="form-upload-image" method="post"
                   action="/profile" enctype="multipart/form-data">
@@ -78,7 +79,8 @@
                 </span>
             </button>
             <div>
-                <h2>{{userInfo.nickname}}</h2>
+                <span style="font-size: 40px">{{userInfo.nickname}}</span>
+                <i class="material-icons" id="btn-profile-name-change" style="background-color: orangered">create</i>
                 <h3>{{userInfo.email}}</h3>
 
             </div>

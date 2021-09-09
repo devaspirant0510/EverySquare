@@ -27,19 +27,15 @@
             <ul id="list-chat">
             </ul>
             <div>
-                <span>
-
-                <select id="select-send-chat-user">
-                    <option class="{{roomKey}}">전체</option>
-                </select>
-                </span>
-                <span>
-                    <form id="form-chat-send">
-
-                        <input id="input-send-chat">
+                <form id="form-chat-send">
+                    <div style="display: flex">
+                        <select id="select-send-chat-user">
+                            <option class="{{roomKey}}">전체</option>
+                        </select>
+                        <input style="width: 100%" id="input-send-chat">
                         <button>전송</button>
-                    </form>
-                    </span>
+                    </div>
+                </form>
             </div>
         </section>
     </section>
@@ -84,7 +80,7 @@
                 <i>채팅창 닫기</i>
             </div>
         </button>
-        <button id="btn-exit">
+        <button class="custom-btn-waring" id="btn-exit" style="float: end">
             나가기
         </button>
     </footer>

@@ -9,7 +9,7 @@ const formChatSend = document.querySelector("#form-chat-send");
 const inputChat = document.querySelector("#input-send-chat");
 const listChat = document.querySelector("#list-chat");
 const selectSendChatUser = document.querySelector("#select-send-chat-user");
-
+const btnExit = document.querySelector("#btn-exit");
 
 const chatPeople = {
     all:"전체",
@@ -28,6 +28,7 @@ const socket = io.connect("http://127.0.0.1:8081/room",{
 console.log(socket)
 const peer = new Peer();
 const peers = {};
+let currentPeer = null;
 console.log(peer)
 
 const options = {
@@ -39,13 +40,14 @@ const options = {
 let myPeerId = "";
 let myStream = "";
 let userList = "";
+let video = "";
 
 // 내 로컬 비디오 연결
 navigator.mediaDevices.getUserMedia(options).then(stream =>{
     console.log("local video connect");
     console.log("socket emit add-list ",USER_ID,USER_NAME);
     myStream = stream;
-    const video = document.createElement("video");
+    video = document.createElement("video");
     addVideoStream(video,stream,true);
     peer.on("call",(call)=>{
         console.log("user video call")
@@ -58,7 +60,7 @@ navigator.mediaDevices.getUserMedia(options).then(stream =>{
         call.on("close",()=>{
             console.log("my video close")
             video.remove();
-        });
+        });currentPeer = call;
     });
     console.log("socket on join 대기");
     socket.on("message",(msg)=>{
@@ -149,20 +151,66 @@ function addVideoStream(video,stream,isMe){
     video.autoplay = true;
     videoGrid.append(video);
 }
-function addChatMessageUI(content,sender,receiver,isPublic){
+function addChatMessageUI(content,sender,receiver,isPublic,profileURL){
     const liTag = document.createElement("li");
     liTag.style.border = "1px solid black";
     if(isPublic){
-        liTag.textContent = `${this.userList[sender]} : ${content}`;
+        // 내가 보낸메시지일때
+        if(sender===USER_ID){
+            const myChat = document.createElement("div");
+            myChat.classList.add("my-chat");
+            const myNameDiv = document.createElement("div");
+            myNameDiv.textContent = "나";
+            const myContent = document.createElement("div");
+            myContent.textContent = content;
+            myChat.append(myNameDiv,myContent);
+            listChat.append(myChat);
+        }else{
+            const otherChat = document.createElement("div");
+            otherChat.classList.add("other-chat");
+            const otherImg = document.createElement("img");
+            otherImg.src = profileURL;
+            const otherName = document.createElement("span");
+            otherName.textContent = this.userList[sender];
+            const otherChatContent = document.createElement("div");
+            otherChatContent.textContent = content;
+            otherChat.append(otherImg,otherName,otherChatContent)
+            listChat.append(otherChat);
+        }
     }else{
+
+        // 내가 보낸메시지일때
+        if(sender===USER_ID){
+            const myChat = document.createElement("div");
+            myChat.classList.add("my-chat");
+            const myNameDiv = document.createElement("div");
+            console.log(userList)
+            console.log(receiver)
+            myNameDiv.textContent = this.userList[receiver]+" 에게보낸 개인 메시지";
+            const myContent = document.createElement("div");
+            myContent.textContent = content;
+            myChat.append(myNameDiv,myContent);
+            listChat.append(myChat);
+        }else{
+            const otherChat = document.createElement("div");
+            otherChat.classList.add("other-chat");
+            const otherImg = document.createElement("img");
+            otherImg.src = profileURL;
+            const otherName = document.createElement("span");
+            otherName.textContent = this.userList[sender]+" 에게 받은 메시지";
+            const otherChatContent = document.createElement("div");
+            otherChatContent.textContent = content;
+            otherChat.append(otherImg,otherName,otherChatContent)
+            listChat.append(otherChat);
+        }
         liTag.textContent = `${this.userList[sender]}의 개인메시지 : ${content}`;
+
     }
-    listChat.append(liTag);
 }
 // 채팅 받았을때
-socket.on("message",(content,roomKey,sender,receiver,isPublic)=>{
+socket.on("message",(content,roomKey,sender,receiver,isPublic,profileURL)=>{
     console.log(content)
-    addChatMessageUI(content,sender,receiver,isPublic);
+    addChatMessageUI(content,sender,receiver,isPublic,profileURL);
 
 
 });
@@ -172,14 +220,14 @@ formChatSend.addEventListener("submit",async (evt)=>{
     if (inputChat.value !==""){
         console.log("/room/"+ROOM_KEY+" 로 메시지 전송")
         if(selectSendChatUser.value==="전체"){
-            socket.emit("message",inputChat.value,ROOM_KEY,USER_ID,chatPeople.all,true);
+            socket.emit("message",inputChat.value,ROOM_KEY,USER_ID,chatPeople.all,true,USER_PROFILE_URL);
         }else{
             console.log(userList)
             const optionList = selectSendChatUser.options;
             const selectIdx = selectSendChatUser.selectedIndex;
             const recId = optionList[selectIdx].className;
-
-            socket.emit("message",inputChat.value,ROOM_KEY,USER_ID,recId,false);
+            console.log(recId)
+            socket.emit("message",inputChat.value,ROOM_KEY,USER_ID,recId,false,USER_PROFILE_URL);
         }
         inputChat.value = "";
 
@@ -233,5 +281,35 @@ function handleVideoConfigure(stream){
             sectionChat.style.display = "none";
         }
     });
+    btnHandlePresent.addEventListener("click",async (evt)=>{
+        const btnPresentOn = btnHandlePresent.children[0];
+        const btnPresentOff = btnHandlePresent.children[0];
+        console.log("onclick screen share")
+        if(!videoChatOptions.screenShare){
+            navigator.mediaDevices.getDisplayMedia({
+                audio: true,
+                video: true
+            }).then(function(_stream){
+                //success
+                video.srcObject = _stream;
+                video.addEventListener("loadedmetadata",()=>{
+                    video.play();
+                });
+                video.autoplay = true;
+                console.log(stream.getVideoTracks()[0])
+                console.log(peer)
+            }).catch(function(e){
+                //error;
+            });
+        }
+        else{
+
+        }
+
+
+    });
 }
 
+btnExit.addEventListener("click",()=>{
+    location.href = "/search";
+})
